@@ -20,32 +20,32 @@ export default function PasswordStrengthMeter({ password }: Props) {
             case 0:
                 return {
                     color: ["#94a3b8", "#64748b"],
-                    label: "Terlalu lemah",
+                    label: "Too weak",
                 }
             case 1:
                 return {
                     color: ["#f87171", "#dc2626"],
-                    label: "Lemah",
+                    label: "Weak",
                 }
             case 2:
                 return {
                     color: ["#facc15", "#f59e0b"],
-                    label: "Lumayan",
+                    label: "Reasonable",
                 }
             case 3:
                 return {
                     color: ["#a3e635", "#10b981"],
-                    label: "Bagus",
+                    label: "Good",
                 }
             case 4:
                 return {
                     color: ["#10b981", "#059669"],
-                    label: "Kuat",
+                    label: "Strong",
                 }
             default: {
                 return {
                     color: ["#e2e8f0", "#e2e8f0"],
-                    label: "Terlalu Lemah",
+                    label: "Too weak",
                 }
             }
         }

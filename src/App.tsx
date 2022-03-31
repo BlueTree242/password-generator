@@ -57,7 +57,7 @@ export default function App() {
                 className="absolute -top-14 flex h-10 w-60 items-center justify-center rounded-lg bg-green-100 text-green-700 shadow-md transition-opacity duration-150 dark:bg-green-200"
                 style={{ opacity: showAlert ? 1 : 0 }}
             >
-                Berhasil menyalin password!
+                Successfully copied password!
             </div>
 
             <div className="mb-8 max-w-md rounded-lg bg-white py-10 px-5 text-center shadow-lg transition-all dark:bg-slate-800 sm:px-10">
@@ -98,7 +98,7 @@ export default function App() {
 
                 <div className="grid grid-cols-2 gap-2 dark:text-slate-100">
                     <label htmlFor="password-length" className="text-left text-lg font-semibold">
-                        Panjang Password
+                        Password Length
                     </label>
                     <div className="flex items-center justify-start">
                         <input
@@ -122,7 +122,7 @@ export default function App() {
                     </div>
 
                     <label htmlFor="include-uppercase" className="text-left text-lg font-semibold">
-                        Huruf Besar
+                        Capital letters
                     </label>
                     <div className="flex justify-start">
                         <input
@@ -135,7 +135,7 @@ export default function App() {
                     </div>
 
                     <label htmlFor="include-number" className="text-left text-lg font-semibold">
-                        Angka
+                        Number
                     </label>
                     <div className="flex justify-start">
                         <input
@@ -148,7 +148,7 @@ export default function App() {
                     </div>
 
                     <label htmlFor="include-symbol" className="text-left text-lg font-semibold">
-                        Simbol
+                        Symbol
                     </label>
                     <div className="flex justify-start">
                         <input
@@ -164,7 +164,7 @@ export default function App() {
                     className="mt-3 w-full rounded bg-gradient-to-r from-emerald-400 to-teal-500 p-3 font-bold text-slate-100 shadow transition-all hover:scale-105 active:scale-100 dark:bg-slate-900 dark:text-slate-100 dark:shadow-none"
                     onClick={() => setPassword(generatePassword(passLength, includeUppercase, includeNumber, includeSymbol))}
                 >
-                    Buat
+                    Generate
                 </button>
             </div>
             <Footer />
