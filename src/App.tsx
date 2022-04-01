@@ -8,8 +8,9 @@ import PasswordStrengthMeter from "./components/PasswordStrengthMeter"
 export default function App() {
     const [passLength, setPassLength] = useState<number | string>(18)
     const [includeUppercase, setIncludeUppercase] = useState(true)
+    const [excludeDuplicate, setExcludeDuplicate] = useState(false)
     const [includeNumber, setIncludeNumber] = useState(true)
-    const [includeSymbol, setIncludeSymbol] = useState(true)
+    const [includeSymbol, setIncludeSymbol] = useState(false)
 
     // Jalankan fungsi generatePassword() hanya sekali
     const [password, setPassword] = useState(() => generatePassword())
@@ -20,7 +21,8 @@ export default function App() {
         characterAmount = passLength,
         includeUpper = includeUppercase,
         includeNumbers = includeNumber,
-        includeSymbols = includeSymbol
+        includeSymbols = includeSymbol,
+        excludeDuplicates = excludeDuplicate
     ) {
         const UPPERCASE_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         const LOWERCASE_CHAR = "abcdefghijklmnopqrstuvwxyz"
@@ -35,7 +37,9 @@ export default function App() {
 
         let password = ""
         for (let i = 0; i < characterAmount; i++) {
-            password += combinedCharacters.charAt(Math.floor(Math.random() * combinedCharacters.length))
+            const char = combinedCharacters.charAt(Math.floor(Math.random() * combinedCharacters.length));
+            if (excludeDuplicates) combinedCharacters = combinedCharacters.replace(char, "")
+            password += char
         }
 
         return password
@@ -158,13 +162,27 @@ export default function App() {
                     <label htmlFor="include-symbol" className="text-left text-lg font-semibold">
                         Symbol
                     </label>
+
+                    <div className="flex justify-start">
+                        <input
+                            type="checkbox"
+                            id="include-number"
+                            className="h-5 w-5"
+                            defaultChecked={includeSymbol}
+                            onChange={() => setIncludeSymbol((prevIncludeNumber) => !prevIncludeNumber)}
+                        />
+                    </div>
+
+                    <label htmlFor="exclude-duplications" className="text-left text-lg font-semibold">
+                        Exclude Duplications
+                    </label>
                     <div className="flex justify-start">
                         <input
                             type="checkbox"
                             id="include-symbol"
                             className="h-5 w-5"
-                            defaultChecked={includeSymbol}
-                            onChange={() => setIncludeSymbol((prevIncludeSymbol) => !prevIncludeSymbol)}
+                            defaultChecked={excludeDuplicate}
+                            onChange={() => setExcludeDuplicate((e) => !e)}
                         />
                     </div>
                 </div>
