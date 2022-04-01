@@ -1,4 +1,4 @@
-import { useState } from "react"
+import {useState} from "react"
 import copy from "copy-to-clipboard"
 import ReactTooltip from "react-tooltip"
 
@@ -48,6 +48,14 @@ export default function App() {
         // Bersihkan semua timeout sebelum memulai timeout yang baru
         clearTimeout(alertTimeout)
         setAlertTimeout(window.setTimeout(() => setShowAlert(false), 2500))
+    }
+
+    function onLengthChange(event: any) {
+        if (isNaN(Number(event.target.value)) || parseInt(event.target.value) <= 0 || parseInt(event.target.value) > 50) {
+            event.cancel()
+            return;
+        }
+        setPassLength(event.target.value === "" ? "" : parseInt(event.target.value))
     }
 
     return (
@@ -115,7 +123,7 @@ export default function App() {
                             min={1}
                             max={50}
                             value={passLength}
-                            onChange={(event) => setPassLength(event.target.value === "" ? "" : parseInt(event.target.value))}
+                            onChange={(event) => onLengthChange(event)}
                             className="w-2/6 rounded border dark:border-slate-900 dark:bg-slate-900"
                             aria-labelledby="password-length"
                         />
