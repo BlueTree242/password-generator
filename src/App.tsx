@@ -144,7 +144,7 @@ export default function App() {
                             type="checkbox"
                             id="include-lowercase"
                             className="h-5 w-5"
-                            defaultChecked={includeUppercase}
+                            defaultChecked={includeLowercase}
                             onChange={() => setIncludeLowercase((prevIncludeLowercase) => !prevIncludeLowercase)}
                         />
                     </div>
