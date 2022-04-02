@@ -91,8 +91,8 @@ export default function App() {
                     <button
                         className="group flex h-full items-center rounded-r-lg bg-slate-200 dark:bg-slate-900 "
                         onClick={() => handleCopy(password)}
-                        data-tip="Salin"
-                        aria-label="Salin"
+                        data-tip="Copy"
+                        aria-label="Copy"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
