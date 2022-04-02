@@ -166,7 +166,7 @@ export default function App() {
                     <div className="flex justify-start">
                         <input
                             type="checkbox"
-                            id="include-number"
+                            id="include-symbol"
                             className="h-5 w-5"
                             defaultChecked={includeSymbol}
                             onChange={() => setIncludeSymbol((prevIncludeNumber) => !prevIncludeNumber)}
@@ -179,7 +179,7 @@ export default function App() {
                     <div className="flex justify-start">
                         <input
                             type="checkbox"
-                            id="include-symbol"
+                            id="exclude-duplications"
                             className="h-5 w-5"
                             defaultChecked={excludeDuplicate}
                             onChange={() => setExcludeDuplicate((e) => !e)}
