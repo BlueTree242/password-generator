@@ -7,7 +7,7 @@
 body {
     @apply flex flex-col items-center justify-center bg-slate-200 transition-all dark:bg-slate-900;
     font-family: "Inter", sans-serif;
-    min-height: 90vh;
+    min-height: 100vh;
 }
 
 * {
