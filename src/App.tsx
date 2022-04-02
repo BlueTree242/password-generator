@@ -6,11 +6,12 @@ import Footer from "./components/Footer"
 import PasswordStrengthMeter from "./components/PasswordStrengthMeter"
 
 export default function App() {
-    const [passLength, setPassLength] = useState<number | string>(18)
-    const [includeUppercase, setIncludeUppercase] = useState(true)
-    const [excludeDuplicate, setExcludeDuplicate] = useState(false)
-    const [includeNumber, setIncludeNumber] = useState(true)
-    const [includeSymbol, setIncludeSymbol] = useState(false)
+    const [passLength, setPassLength] = useLocalStorage<number | string>("pass-length", 18)
+    const [includeUppercase, setIncludeUppercase] = useLocalStorage("include-uppercase", true)
+    const [includeLowercase, setIncludeLowercase] = useLocalStorage("include-lowercase", true)
+    const [excludeDuplicate, setExcludeDuplicate] = useLocalStorage("exclude-duplicate", false)
+    const [includeNumber, setIncludeNumber] = useLocalStorage("include-number", true)
+    const [includeSymbol, setIncludeSymbol] = useLocalStorage("include-symbol", false)
 
     // Jalankan fungsi generatePassword() hanya sekali
     const [password, setPassword] = useState(() => generatePassword())
@@ -20,6 +21,7 @@ export default function App() {
     function generatePassword(
         characterAmount = passLength,
         includeUpper = includeUppercase,
+        includeLower = includeLowercase,
         includeNumbers = includeNumber,
         includeSymbols = includeSymbol,
         excludeDuplicates = excludeDuplicate
@@ -29,8 +31,9 @@ export default function App() {
         const NUMBER_CHAR = "1234567890"
         const SYMBOL_CHAR = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
 
-        let combinedCharacters = LOWERCASE_CHAR
+        let combinedCharacters = ""
 
+        if (includeLower) combinedCharacters += LOWERCASE_CHAR
         if (includeUpper) combinedCharacters += UPPERCASE_CHAR
         if (includeNumbers) combinedCharacters += NUMBER_CHAR
         if (includeSymbols) combinedCharacters += SYMBOL_CHAR
@@ -134,6 +137,19 @@ export default function App() {
                     </div>
 
                     <label htmlFor="include-uppercase" className="text-left text-lg font-semibold">
+                        Small letters
+                    </label>
+                    <div className="flex justify-start">
+                        <input
+                            type="checkbox"
+                            id="include-lowercase"
+                            className="h-5 w-5"
+                            defaultChecked={includeUppercase}
+                            onChange={() => setIncludeLowercase((prevIncludeLowercase) => !prevIncludeLowercase)}
+                        />
+                    </div>
+
+                    <label htmlFor="include-uppercase" className="text-left text-lg font-semibold">
                         Capital letters
                     </label>
                     <div className="flex justify-start">
@@ -196,4 +212,43 @@ export default function App() {
             <Footer />
         </div>
     )
+}
+// Hook, copied from https://usehooks.com/useLocalStorage/
+function useLocalStorage<T>(key: string, initialValue: T) {
+    // State to store our value
+    // Pass initial state function to useState so logic is only executed once
+    const [storedValue, setStoredValue] = useState<T>(() => {
+        if (typeof window === "undefined") {
+            return initialValue;
+        }
+        try {
+            // Get from local storage by key
+            const item = window.localStorage.getItem(key);
+            // Parse stored json or if none return initialValue
+            return item ? JSON.parse(item) : initialValue;
+        } catch (error) {
+            // If error also return initialValue
+            console.log(error);
+            return initialValue;
+        }
+    });
+    // Return a wrapped version of useState's setter function that ...
+    // ... persists the new value to localStorage.
+    const setValue = (value: T | ((val: T) => T)) => {
+        try {
+            // Allow value to be a function so we have same API as useState
+            const valueToStore =
+                value instanceof Function ? value(storedValue) : value;
+            // Save state
+            setStoredValue(valueToStore);
+            // Save to local storage
+            if (typeof window !== "undefined") {
+                window.localStorage.setItem(key, JSON.stringify(valueToStore));
+            }
+        } catch (error) {
+            // A more advanced implementation would handle the error case
+            console.log(error);
+        }
+    };
+    return [storedValue, setValue] as const;
 }
